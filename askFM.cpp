@@ -6,6 +6,7 @@ using namespace std;
 
 struct askFM {
   //ifstream in_file{"user_ids.txt"};
+  //
    fstream id_file_in;
    askFM() : id_file_in("user_ids.txt", ios::in | ios::out |ios::app) {
     if(!id_file_in) {
