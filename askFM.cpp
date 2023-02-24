@@ -15,13 +15,39 @@ struct askFM {
    }
 
    void run () {
-    int choice = menu_1();
+    bool login_status;     // true if logged in or false
+    int choice = menu_1(); // menu presented to user for signing or loggin in
+
     if(choice == 1)
-     Login();
+    login_status = Login();
     if(choice == 2)
      SignUp();
+    
+
+    if(login_status == true) {
+    int choice = menu();
+    if (choice == 5)
+    AskQuestion();
+    }
    }
-     
+
+   int menu() {
+    int choice = -1;
+    while( choice == -1) {
+        cout << setw(20) <<" "<< "1: Print Questions To Me" << endl;
+        cout << setw(20) <<" "<< "2: Print Questions From Me" << endl;
+        cout << setw(20) <<" "<< "3: Answer Question" << endl;
+        cout << setw(20) <<" "<< "4: Delete Question" << endl;
+        cout << setw(20) << " "<<"5: Ask Question" << endl;
+
+        cin >> choice;
+        if(!(choice<=8 && choice>=1)) {
+            cout << " Invalid Choice " << endl;
+            choice = -1;
+        }
+    }
+    return choice;
+   }
    int menu_1() {
     int choice = -1;
     while(choice == -1) {
@@ -37,7 +63,7 @@ struct askFM {
     return choice;
    }
 
-   void Login() {
+   bool Login() {
     string name;
     string list_name;
     int list_pin;
@@ -48,14 +74,14 @@ struct askFM {
        id_file_in >> list_name;
 
        if(list_name == "end_of_file")
-       return;
+       return false;
 
        id_file_in >> list_pin;
      //  cout << endl <<  " entered the loop" << list_name << endl << list_pin<< endl;
 
     if(list_name == name && (int)list_pin == PIN) {
-            cout << " Account Found" << endl;
-             return;
+            cout << "Logged In" << endl;
+             return true;
     }
    
 
@@ -78,6 +104,12 @@ struct askFM {
 
    } 
    
+   void AskQuestion() {
+
+   }
+   void close_files() {
+     id_file_in.close();
+   }
 };
 
 
@@ -86,6 +118,7 @@ int main() {
    //---- YOU WRITE YOUR CODE BELOW THIS LINE----
     askFM app;
     app.run();
+    app.close_files();
 
     return 0;
 
